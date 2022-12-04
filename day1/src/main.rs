@@ -17,14 +17,14 @@
 fn main() {
     let file_input: String = read_input_file();
     // print!("{}", TESTDATA);
-    calculate_max_calories(&file_input);
+    part_1_calculate_max_calories(&file_input);
 }
 
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
 }
 
-fn calculate_max_calories(input: &str) {
+fn part_1_calculate_max_calories(input: &str) -> Vec<usize> {
     let mut elves = Vec::new();
     let mut calories = 0;
     for line in input.lines() {
@@ -37,4 +37,5 @@ fn calculate_max_calories(input: &str) {
         }
     }
     print!("max elves calories = {}", elves.iter().max().unwrap());
+    elves
 }
