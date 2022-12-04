@@ -28,6 +28,8 @@ fn read_input_file() -> String {
 
 fn get_test_data_debug() {
     for line in TESTDATA.lines() {
-        dbg!(line);
+        if(line.is_empty()) {
+           dbg!(line); 
+        }
     }
 }
