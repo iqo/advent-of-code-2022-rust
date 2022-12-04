@@ -26,14 +26,14 @@ fn read_input_file() -> String {
 
 fn calculate_max_calories(input: &str) {
     let mut elves = Vec::new();
-    let mut sum = 0;
+    let mut calories = 0;
     for line in input.lines() {
         if line.is_empty() {
-            elves.push(sum);
-            sum = 0;
+            elves.push(calories);
+            calories = 0;
             // dbg!(line);
         } else {
-            sum += line.parse::<usize>().unwrap();
+            calories += line.parse::<usize>().unwrap();
         }
     }
     print!("max elves calories = {}", elves.iter().max().unwrap());
