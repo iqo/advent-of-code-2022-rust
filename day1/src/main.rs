@@ -16,26 +16,31 @@
 "; */
 fn main() {
     let file_input: String = read_input_file();
-    // print!("{}", TESTDATA);
-    part_1_calculate_max_calories(&file_input);
+    let mut elves = part_one_calculate_max_calories(&file_input);
+    elves.sort();
+    elves.reverse();
+    print!(
+        "Elf whit most calories: {} AND Sum of top three calories: {}",
+        elves.iter().max().unwrap(),
+        elves[..3].iter().sum::<usize>()
+    );
 }
 
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
 }
 
-fn part_1_calculate_max_calories(input: &str) -> Vec<usize> {
+fn part_one_calculate_max_calories(input: &str) -> Vec<usize> {
     let mut elves = Vec::new();
     let mut calories = 0;
     for line in input.lines() {
         if line.is_empty() {
             elves.push(calories);
             calories = 0;
-            // dbg!(line);
         } else {
             calories += line.parse::<usize>().unwrap();
         }
     }
-    print!("max elves calories = {}", elves.iter().max().unwrap());
+    elves.push(calories);
     elves
 }
