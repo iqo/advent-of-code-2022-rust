@@ -22,7 +22,7 @@ fn main() {
     print!(
         "Elf whit most calories: {} AND Sum of top three calories: {}",
         elves.iter().max().unwrap(),
-        elves[..3].iter().sum::<usize>()
+        elves[..3].iter().sum::<i32>()
     );
 }
 
@@ -30,7 +30,7 @@ fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
 }
 
-fn part_one_calculate_max_calories(input: &str) -> Vec<usize> {
+fn part_one_calculate_max_calories(input: &str) -> Vec<i32> {
     let mut elves = Vec::new();
     let mut calories = 0;
     for line in input.lines() {
@@ -38,9 +38,9 @@ fn part_one_calculate_max_calories(input: &str) -> Vec<usize> {
             elves.push(calories);
             calories = 0;
         } else {
-            calories += line.parse::<usize>().unwrap();
+            calories += line.parse::<i32>().unwrap();
         }
-    }
+  }
     elves.push(calories);
     elves
 }
