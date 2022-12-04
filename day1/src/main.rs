@@ -17,14 +17,14 @@
 fn main() {
     let file_input: String = read_input_file();
     // print!("{}", TESTDATA);
-    get_test_data_debug(&file_input);
+    calculate_max_calories(&file_input);
 }
 
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
 }
 
-fn get_test_data_debug(input: &str) {
+fn calculate_max_calories(input: &str) {
     let mut elves = Vec::new();
     let mut sum = 0;
     for line in input.lines() {
