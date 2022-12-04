@@ -1,5 +1,4 @@
-
-const TESTDATA: &str = "
+/* const TESTDATA: &str = "
 1000
 2000
 3000
@@ -14,11 +13,9 @@ const TESTDATA: &str = "
 9000
 
 10000
-";
+"; */
 fn main() {
-    let file_input:String = read_input_file();
-    // let input1 = include_str!("input.txt");
-    // println!("{}", file_input);
+    let file_input: String = read_input_file();
     // print!("{}", TESTDATA);
     get_test_data_debug(&file_input);
 }
@@ -28,16 +25,16 @@ fn read_input_file() -> String {
 }
 
 fn get_test_data_debug(input: &str) {
-    let mut elves= Vec::new();
+    let mut elves = Vec::new();
     let mut sum = 0;
     for line in input.lines() {
         if line.is_empty() {
             elves.push(sum);
             sum = 0;
-            dbg!(line);
+            // dbg!(line);
         } else {
             sum += line.parse::<usize>().unwrap();
         }
     }
-    print!("elves array = {:?} max elves calories = {}",elves, elves.iter().max().unwrap());
+    print!("max elves calories = {}", elves.iter().max().unwrap());
 }
