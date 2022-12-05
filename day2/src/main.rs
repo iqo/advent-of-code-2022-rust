@@ -1,10 +1,10 @@
 use std::cmp::Ordering;
 use std::str::FromStr;
 use std::string::ParseError;
-/* const TESTDATA: &str = "A Y
+const TESTDATA: &str = "A Y
 B X
 C Z
-"; */
+";
 #[derive(PartialEq, Debug, Clone, Copy)]
 enum PlayerMove {
     Rock,
@@ -89,7 +89,7 @@ fn part_one(input: &str) -> i32 {
         */
         let opponent_move = PlayerMove::from_str(split_line[0]).unwrap();
         let our_move = PlayerMove::from_str(split_line[1]).unwrap();
-        let round_score = game_score(opponent_move, our_move);
+        let round_score = game_score(our_move, opponent_move);
         game_total_score += round_score.0;
     }
     game_total_score
@@ -97,6 +97,7 @@ fn part_one(input: &str) -> i32 {
 fn main() {
     let file_input: String = read_input_file();
     let part_one_scores = part_one(&file_input);
+    // assert_eq!(part_one_scores, 8392);
     println!("Your total score of the game is: {} points", part_one_scores);
 }
 fn read_input_file() -> String {
