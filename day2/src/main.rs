@@ -67,7 +67,7 @@ impl FromStr for PlayerMove {
     }
 }
 
-fn player_move(our: PlayerMove, their: PlayerMove) -> (i32, i32) {
+fn game_score(our: PlayerMove, their: PlayerMove) -> (i32, i32) {
     let (o, t) = if our == their {
         (3, 3)
     } else if our < their {
@@ -78,26 +78,24 @@ fn player_move(our: PlayerMove, their: PlayerMove) -> (i32, i32) {
     (o + our.player_move(), t + their.player_move())
 }
 
-fn part_one(input: &str) -> i32{
-    let mut total = 0;
+fn part_one(input: &str) -> i32 {
+    let mut total_score = 0;
     for s in input.lines() {
         let split_line: Vec<_> = s.split_ascii_whitespace().collect();
+        /*         
         println!("{:?}", split_line);
+        */
         let opponent_score = PlayerMove::from_str(split_line[0]).unwrap();
         let our_score = PlayerMove::from_str(split_line[1]).unwrap();
-        let game_score = player_move(opponent_score, our_score) ;
-        total += game_score.0;
-        println!("{}", game_score.1);
-
+        let game_score = game_score(opponent_score, our_score);
+        total_score += game_score.0;
     }
-    println!("{}", total);
-    total
+    total_score
 }
 fn main() {
-    // part_one(TESTDATA);
     let file_input: String = read_input_file();
-    part_one(&file_input);
-    // println!("{}", TESTDATA);
+    let part_one_scores = part_one(&file_input);
+    println!("Your total score of the game is: {} point", part_one_scores);
 }
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
