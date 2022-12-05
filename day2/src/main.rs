@@ -1,22 +1,21 @@
 use std::cmp::Ordering;
 use std::str::FromStr;
 use std::string::ParseError;
-const TESTDATA: &str = "
-A Y
+/* const TESTDATA: &str = "A Y
 B X
 C Z
-";
-#[derive(PartialEq)]
+"; */
+#[derive(PartialEq, Debug, Clone, Copy)]
 enum PlayerMove {
     Rock,
     Paper,
     Scissor,
 }
-enum MatchOutcome {
+/* enum MatchOutcome {
     Win,
     Draw,
     Lose,
-}
+} */
 
 impl PartialOrd for PlayerMove {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
@@ -78,11 +77,28 @@ fn player_move(our: PlayerMove, their: PlayerMove) -> (i32, i32) {
     };
     (o + our.player_move(), t + their.player_move())
 }
-fn main() {
-    /*     let file_input: String = read_input_file();
-     */
-    println!("{}", TESTDATA);
+
+fn part_one(input: &str) -> i32{
+    let mut total = 0;
+    for s in input.lines() {
+        let split_line: Vec<_> = s.split_ascii_whitespace().collect();
+        println!("{:?}", split_line);
+        let opponent_score = PlayerMove::from_str(split_line[0]).unwrap();
+        let our_score = PlayerMove::from_str(split_line[1]).unwrap();
+        let game_score = player_move(opponent_score, our_score) ;
+        total += game_score.0;
+        println!("{}", game_score.1);
+
+    }
+    println!("{}", total);
+    total
 }
-/* fn read_input_file() -> String {
+fn main() {
+    // part_one(TESTDATA);
+    let file_input: String = read_input_file();
+    part_one(&file_input);
+    // println!("{}", TESTDATA);
+}
+fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
-} */
+}
