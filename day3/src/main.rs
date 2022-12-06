@@ -7,7 +7,6 @@ wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw";
 fn priority(b: u8) -> i32 {
-    /* dbg!(b); */
     (97..=122) // assci a till z
         .chain(65..=90) //assci A till Z
         .zip(1..=52)
