@@ -21,7 +21,12 @@ input.lines().map(|f| {
 }).sum()
 }
 fn main() { 
+let file_input: String = read_input_file();
 let part_one_backpacks_test_data = part_one(TESTDATA);
+let part_one_backpacks = part_one(&file_input);
     assert_eq!(part_one_backpacks_test_data, 157);
-    println!("{}", part_one_backpacks_test_data);
+    println!("{}", part_one_backpacks);
+}
+fn read_input_file() -> String {
+    std::fs::read_to_string("src/input.txt").unwrap()
 }
