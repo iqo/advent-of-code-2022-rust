@@ -11,11 +11,6 @@ enum PlayerMove {
     Paper,
     Scissor,
 }
-/* enum MatchOutcome {
-    Win,
-    Draw,
-    Lose,
-} */
 
 impl PartialOrd for PlayerMove {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
@@ -66,7 +61,24 @@ impl FromStr for PlayerMove {
         }
     }
 }
+enum MatchOutcomePrediction {
+    Win,
+    Draw,
+    Lose,
+}
 
+impl FromStr for MatchOutcomePrediction {
+    type Err = ParseError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "X" => Ok(MatchOutcomePrediction::Lose),
+            "Y" => Ok(MatchOutcomePrediction::Draw),
+            "Z" => Ok(MatchOutcomePrediction::Win),
+            _ => panic!("Faild to match {s}")
+            
+        }
+    }
+}
 fn game_score(our: PlayerMove, their: PlayerMove) -> (i32, i32) {
 
     let (o, t) = 
@@ -94,11 +106,30 @@ fn part_one(input: &str) -> i32 {
     }
     game_total_score
 }
+
+fn part_two(input: &str) -> i32{
+    let mut match_outcome_prediction_score = 0;
+    for s in input.lines() {
+        let split_line: Vec<_> = s.split_ascii_whitespace().collect();
+        let opponent_move = PlayerMove::from_str(split_line[0]).unwrap();
+        let match_outcome_prediction = MatchOutcomePrediction::from_str(split_line[1]).unwrap();
+        let our_move = match(opponent_move, match_outcome_prediction)  {
+            (t, MatchOutcomePrediction::Win) => t.greater(),
+            (t, MatchOutcomePrediction::Draw) => t,
+            (t, MatchOutcomePrediction::Lose) => t.less()
+        };
+        let round_score = game_score(our_move, opponent_move);
+        match_outcome_prediction_score += round_score.0;
+    }
+    match_outcome_prediction_score
+}
 fn main() {
     let file_input: String = read_input_file();
     let part_one_scores = part_one(&file_input);
-    // assert_eq!(part_one_scores, 8392);
-    println!("Your total score of the game is: {} points", part_one_scores);
+    let part_two_scores = part_two(&file_input);
+    /* assert_eq!(part_one_scores, 15);
+    assert_eq!(part_two_scores, 12); */
+    println!("Your total score of the game is: {} points.  Part two scores {}", part_one_scores, part_two_scores);
 }
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
