@@ -1,10 +1,10 @@
 use std::cmp::Ordering;
 use std::str::FromStr;
 use std::string::ParseError;
-const TESTDATA: &str = "A Y
+/* const TESTDATA: &str = "A Y
 B X
 C Z
-";
+"; */
 #[derive(PartialEq, Debug, Clone, Copy)]
 enum PlayerMove {
     Rock,
