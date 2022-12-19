@@ -13,8 +13,8 @@ struct SectionAssignmentRange {
 }
 impl SectionAssignmentRange {
     fn fully_contains ( &self, other: &Self) -> bool {
-        dbg!(self);
-        dbg!(other);
+/*         dbg!(self);
+        dbg!(other); */
         self.start <= other.start && self.end >= other.end
     }
 }
@@ -33,14 +33,20 @@ impl FromStr for SectionAssignmentRange {
         })
     }
 }
-fn part_one(input: &str, struct_data: fn(&SectionAssignmentRange, &SectionAssignmentRange) -> bool) -> i32 {
+fn part_one(input: &str, struct_function: fn(&SectionAssignmentRange, &SectionAssignmentRange) -> bool) -> i32 {
     input.lines().map(|line|{
         let comma_split = line.split(',').flat_map(SectionAssignmentRange::from_str);
         let [a, b] = &comma_split.collect::<Vec<_>>()[..] else { unreachable!()};
-        (struct_data(a,b) || struct_data(b,a)) as i32
+        (struct_function(a,b) || struct_function(b,a)) as i32
     }).sum()
 }
 fn main() {
+    let data = read_input_file();
+    let part_one_real_data = part_one(&data, SectionAssignmentRange::fully_contains);
     let part_one_test_data = part_one(TESTDATA, SectionAssignmentRange::fully_contains);
     assert_eq!(part_one_test_data, 2);
+    println!("{}", part_one_real_data);
+}
+fn read_input_file() -> String {
+    std::fs::read_to_string("src/input.txt").unwrap()
 }
