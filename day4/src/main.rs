@@ -17,6 +17,9 @@ impl SectionAssignmentRange {
         dbg!(other); */
         self.start <= other.start && self.end >= other.end
     }
+     fn overlap_at_all(&self, other: &Self) -> bool {
+        !(self.start > other.end || self.end < other.start)
+     }
 }
 impl FromStr for SectionAssignmentRange {
     type Err = ParseError;
@@ -33,7 +36,7 @@ impl FromStr for SectionAssignmentRange {
         })
     }
 }
-fn part_one(input: &str, struct_function: fn(&SectionAssignmentRange, &SectionAssignmentRange) -> bool) -> i32 {
+fn part_one_and_two(input: &str, struct_function: fn(&SectionAssignmentRange, &SectionAssignmentRange) -> bool) -> i32 {
     input.lines().map(|line|{
         let comma_split = line.split(',').flat_map(SectionAssignmentRange::from_str);
         let [a, b] = &comma_split.collect::<Vec<_>>()[..] else { unreachable!()};
@@ -42,10 +45,16 @@ fn part_one(input: &str, struct_function: fn(&SectionAssignmentRange, &SectionAs
 }
 fn main() {
     let data = read_input_file();
-    let part_one_real_data = part_one(&data, SectionAssignmentRange::fully_contains);
-    let part_one_test_data = part_one(TESTDATA, SectionAssignmentRange::fully_contains);
+    let part_one_real_data = part_one_and_two(&data, SectionAssignmentRange::fully_contains);
+    let part_one_test_data = part_one_and_two(TESTDATA, SectionAssignmentRange::fully_contains);
+    let part_two_test_data = part_one_and_two(TESTDATA, SectionAssignmentRange::overlap_at_all);
+    let part_two_real_data = part_one_and_two(&data, SectionAssignmentRange::overlap_at_all);
+
+
     assert_eq!(part_one_test_data, 2);
-    println!("{}", part_one_real_data);
+    assert_eq!(part_two_test_data, 4);
+
+    println!("Part one {}: Part two {}", part_one_real_data, part_two_real_data);
 }
 fn read_input_file() -> String {
     std::fs::read_to_string("src/input.txt").unwrap()
