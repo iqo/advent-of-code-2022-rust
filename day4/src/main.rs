@@ -8,17 +8,17 @@ const TESTDATA: &str = "2-4,6-8
 2-6,4-8";
 #[derive(Debug)]
 struct SectionAssignmentRange {
-    start: i32,
-    end: i32,
+    start_range: i32,
+    end_range: i32,
 }
 impl SectionAssignmentRange {
     fn fully_contains ( &self, other: &Self) -> bool {
 /*         dbg!(self);
         dbg!(other); */
-        self.start <= other.start && self.end >= other.end
+        self.start_range <= other.start_range && self.end_range >= other.end_range
     }
      fn overlap_at_all(&self, other: &Self) -> bool {
-        !(self.start > other.end || self.end < other.start)
+        !(self.start_range > other.end_range || self.end_range < other.start_range)
      }
 }
 impl FromStr for SectionAssignmentRange {
@@ -31,8 +31,8 @@ impl FromStr for SectionAssignmentRange {
             .collect();
         let [start, end] = &pair[..] else { unreachable!() };
         Ok(Self {
-            start: *start,
-            end: *end,
+            start_range: *start,
+            end_range: *end,
         })
     }
 }
